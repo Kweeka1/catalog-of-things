@@ -2,17 +2,16 @@ require 'date'
 require 'time'
 
 class Item
+  attr_reader :publish_date, :id
+  attr_accessor :label
+
   # @param [Date] publish_date
-  def initialize(publish_date, id = Random.rand(0, 10_000), archived: false)
+  # @param [Integer] id
+  # @param [Boolean] archived
+  def initialize(publish_date, id = Random.rand(0..10_000), archived: false)
     @publish_date = publish_date
     @archived = archived
     @id = id
-  end
-
-  def can_be_archived?
-    return true if Time.now.year - @publish_date.year > 10
-
-    false
   end
 
   def move_to_archive
@@ -20,5 +19,18 @@ class Item
     return unless can_be_archived
 
     @archived = true
+  end
+
+  # @param [Label] label
+  def add_label(label)
+    self.label = label
+    label.add_item self unless label.items.include? self
+  end
+
+  private
+
+  # @return [Boolean]
+  def can_be_archived?
+    Time.now.year - @publish_date.year > 10
   end
 end
