@@ -2,7 +2,7 @@ require_relative 'item'
 require 'json'
 
 class Book < Item
-  attr_reader :publisher, :cover_state, :title, :id
+  attr_reader :publisher, :cover_state, :title
 
   # @param [String] title
   # @param [Date] publish_date
