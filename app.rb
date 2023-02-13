@@ -72,10 +72,12 @@ Please select an option by specifying the corresponding number:
 
   # rubocop:disable Layout/LineLength
   def list_books
-    @items.each_with_index do |item, idx|
+    idx = 0
+    @items.each do |item|
       next unless item.instance_of? Book
 
       puts "#{idx}) #{item.title} by #{item.publisher}, published at #{item.publish_date} with #{item.cover_state} cover state."
+      idx += 1
     end
   end
 
