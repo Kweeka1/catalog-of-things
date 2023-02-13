@@ -66,7 +66,7 @@ Please select an option by specifying the corresponding number:
 
   def list_labels
     @labels.each_with_index do |label, idx|
-      puts "#{idx}) #{label.title}, #{label.color}"
+      puts "#{idx}) Title: #{label.title}, Color: #{label.color}"
     end
   end
 
