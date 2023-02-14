@@ -34,4 +34,3 @@ class UserEntry
     end
   end
 end
-

@@ -80,6 +80,7 @@ Please select an option by specifying the corresponding number:
       idx += 1
     end
   end
+  # rubocop:enable Layout/LineLength
 
   def save_data
     @file_manager.save_records('books', Book.to_s, @items)
