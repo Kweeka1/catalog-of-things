@@ -10,15 +10,10 @@ class Item
   end
 
   def can_be_archived?
-    return true if Time.now.year - @publish_date.year > 10
-
-    false
+    Time.now.year - @publish_date.year > 10
   end
 
   def move_to_archive
-    can_be_archived = can_be_archived?
-    return unless can_be_archived
-
-    @archived = true
+    @archived = true if can_be_archived?
   end
 end
