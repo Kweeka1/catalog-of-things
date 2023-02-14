@@ -1,6 +1,7 @@
 require_relative 'book'
 require_relative 'user_entry'
 require_relative 'file_manager'
+require_relative './music/music_album'
 
 class App
   def initialize
@@ -10,8 +11,14 @@ class App
     load_data
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/MethodLength
   def run
     puts 'Welcome to Catalog of my things'
+    music = MusicAlbum.new
+    music.load_music
+    music.load_genre
+
     loop do
       print_option
       option = gets.chomp
@@ -19,16 +26,28 @@ class App
       case option
       when '1'
         list_books
+      when '2'
+        music.list_music
+      when '5'
+        music.list_genre
       when '6'
         list_labels
       when '9'
         add_book
+      when '10'
+        music.add_music
       when '13'
         save_data
-        return
+        music.save_music
+        break
+      else
+        puts 'list other things'
       end
     end
   end
+
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/MethodLength
 
   private
 
