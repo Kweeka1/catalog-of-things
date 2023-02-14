@@ -1,4 +1,4 @@
-require './music_album'
+require_relative './music/music_album'
 
 class App
   def run
@@ -11,15 +11,13 @@ class App
       option = gets.chomp
 
       case option
-      when '1'
-        music.list_music
       when '2'
-        music.list_genre
-      when '3'
-        music.add_music
-      when '4'
-        music.add_genre
+        music.list_music
       when '5'
+        music.list_genre
+      when '10'
+        music.add_music
+      when '13'
         music.save_music
         break
 

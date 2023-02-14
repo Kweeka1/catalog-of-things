@@ -1,8 +1,9 @@
-require './music'
-require './genre'
+require_relative './music'
+require_relative './genre'
 require 'json'
 
 class MusicAlbum
+  attr_accessor :music, :genres
   def initialize
     @music = []
     @genres = []
@@ -49,18 +50,18 @@ class MusicAlbum
   def save_music
     music = @music.map { |song| { id:song.id, on_spotify: song.on_spotify, publish_date: song.publish_date } }.to_json
     genre = @genres.map { |genre| { id: genre.id, name: genre.name } }.to_json
-    save_m = File.open("music.json","w")
-    save_g = File.open("genre.json","w")
+    save_m = File.open("music/music.json","w")
+    save_g = File.open("music/genre.json","w")
     save_m.write(music)
     save_g.write(genre)
   end
 
   def load_music 
-    if File.exist?('music.json')
-      load_music = File.read('music.json')
+    if File.exist?('music/music.json')
+      load_music = File.read('music/music.json')
       json_music = JSON.parse(load_music)
     else
-      File.write('music.json', [])
+      File.write('music/music.json', [])
       json_music = []
     end
 
@@ -71,11 +72,11 @@ class MusicAlbum
   end
 
   def load_genre 
-    if File.exist?('genre.json')
-      load_genre = File.read('genre.json')
+    if File.exist?('music/genre.json')
+      load_genre = File.read('music/genre.json')
       json_genre = JSON.parse(load_genre)
     else
-      File.write('genre.json', [])
+      File.write('music/genre.json', [])
       json_genre = []
     end
 

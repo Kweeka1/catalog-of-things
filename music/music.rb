@@ -1,4 +1,4 @@
-require "./item"
+require_relative "../item"
 
 class Music < Item
     attr_accessor :publish_date, :on_spotify
@@ -15,5 +15,4 @@ class Music < Item
         super and @on_spotify
     end
     
-
 end
