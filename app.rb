@@ -1,16 +1,29 @@
+require_relative './music/music_album'
+
 class App
   def run
-    print_option
+    music = MusicAlbum.new
+    music.load_music
+    music.load_genre
+
     loop do
+      print_option
       option = gets.chomp
 
       case option
-      when '1'
-        puts 'list books'
+      when '2'
+        music.list_music
+      when '5'
+        music.list_genre
+      when '10'
+        music.add_music
+      when '13'
+        music.save_music
+        break
+
       else
         puts 'list other things'
       end
-      puts 'not implemented'
     end
   end
 
