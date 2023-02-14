@@ -5,7 +5,7 @@ class App
     music = MusicAlbum.new
     music.load_music
     music.load_genre
-  
+
     loop do
       print_option
       option = gets.chomp

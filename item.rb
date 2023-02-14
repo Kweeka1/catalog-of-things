@@ -4,6 +4,7 @@ require 'time'
 class Item
   # @param [Date] publish_date
   attr_accessor :genre
+
   def initialize(publish_date, id = Random.rand(0..10_000), archived: false)
     @publish_date = publish_date
     @archived = archived
