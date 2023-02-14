@@ -15,10 +15,7 @@ class Item
   end
 
   def move_to_archive
-    can_be_archived = can_be_archived?
-    return unless can_be_archived
-
-    @archived = true
+    @archived = true if can_be_archived?
   end
 
   # @param [Label] label
