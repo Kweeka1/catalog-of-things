@@ -1,5 +1,5 @@
-require_relative '../book'
-require_relative '../label'
+require_relative '../book/book'
+require_relative '../book/label'
 require 'rspec'
 
 describe 'Label' do

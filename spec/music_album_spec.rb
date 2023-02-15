@@ -1,4 +1,4 @@
-require_relative '../music_album'
+require_relative '../music/music_album'
 
 describe MusicAlbum do
   context 'Testing for music_album class' do
