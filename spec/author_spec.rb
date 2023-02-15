@@ -2,8 +2,8 @@ require_relative '../author'
 require_relative '../game'
 
 describe Author do
-  let(:game1) { Game.new('2010/01/01', '2015/05/05', true) }
-  let(:game2) { Game.new('2010/01/01', '2015/05/05', true) }
+  let(:game1) { Game.new('Call of duty', '2010/01/01', '2015/05/05', true) }
+  let(:game2) { Game.new('Castlevenia', '2023/01/01', '2023/05/05', false) }
   let(:author) { Author.new('belal', 'gamal') }
 
   it 'add_item method should add to items array' do
