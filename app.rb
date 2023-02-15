@@ -5,6 +5,8 @@ class App
   def initialize
     @book_manager = BookManager.new
     @music = MusicAlbum.new
+    @music.load_music
+    @music.load_genre
   end
 
   # rubocop:disable Metrics/CyclomaticComplexity
