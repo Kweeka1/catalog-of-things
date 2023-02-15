@@ -1,5 +1,6 @@
 require_relative 'book'
 require_relative 'label'
+require_relative 'game'
 
 class FileManager
   def initialize(path = './data')
@@ -20,7 +21,13 @@ class FileManager
   def load_books(file_name)
     records = JSON.load_file "#{@path}/#{file_name}.json"
     records.map do |record|
-      Book.new(record['title'], record['publish_date'], record['publisher'], record['cover_state'], record['id'])
+      Book.new(
+        record['title'],
+        record['publish_date'],
+        record['publisher'],
+        record['cover_state'],
+        record['id'],
+      )
     end
   rescue StandardError
     []
@@ -31,7 +38,7 @@ class FileManager
   def load_labels(file_name, items)
     records = JSON.load_file "#{@path}/#{file_name}.json"
     labels = []
-    records.each do |record|
+    records.map do |record|
       label = Label.new(record['title'], record['color'], [], record['id'])
       labels << label
       next if record['items'].empty?
@@ -42,6 +49,21 @@ class FileManager
       end
     end
     labels
+  end
+
+  def load_games(file_name)
+    records = JSON.load_file "#{@path}/#{file_name}.json"
+
+    records.map do |record|
+      Game.new(
+        record['name'],
+        record['publish_date'],
+        record['last_played_at'],
+        record['multiplayer'],
+      )
+    rescue StandardError
+      []
+    end
   end
 
   private
