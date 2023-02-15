@@ -42,6 +42,8 @@ class FileManager
       end
     end
     labels
+  rescue StandardError
+    []
   end
 
   private
