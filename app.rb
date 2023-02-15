@@ -2,12 +2,14 @@ require_relative 'book'
 require_relative 'user_entry'
 require_relative 'file_manager'
 require_relative './music/music_album'
+require_relative './game'
 
 class App
   def initialize
     @file_manager = FileManager.new
     @labels = []
     @items = []
+    @games = []
     load_data
   end
 
@@ -30,12 +32,16 @@ class App
         music.list_music
       when '5'
         music.list_genre
+      when '4'
+        list_games
       when '6'
         list_labels
       when '9'
         add_book
       when '10'
         music.add_music
+      when '12'
+        add_game
       when '13'
         save_data
         music.save_music
@@ -54,6 +60,7 @@ class App
   def load_data
     @items.concat @file_manager.load_books 'books'
     @labels.concat @file_manager.load_labels('labels', @items)
+    @games.concat @file_manager.load_games('games')
   end
 
   def print_option
@@ -83,6 +90,22 @@ Please select an option by specifying the corresponding number:
     puts 'Book created successfully'
   end
 
+  def add_game
+    name = UserEntry.get_str('Enter game name: ', 'Please enter a valid game name')
+
+    publish_date = UserEntry.get_date('Publish date: ', 'Please enter a valid date!')
+
+    last_played_at = UserEntry.get_date('last played at date: ', 'Please enter a valid date!')
+
+    multiplayer =
+      UserEntry.get_bool(
+        'Multiplayer(y/n): ',
+        'Value entered is not valid. Please enter (y) for yes and (n) for no',
+      )
+    @games << Game.new(name, publish_date, last_played_at, multiplayer)
+    puts 'Game created successfully'
+  end
+
   def list_labels
     @labels.each_with_index do |label, idx|
       puts "#{idx}) Title: #{label.title}, Color: #{label.color}"
@@ -101,8 +124,20 @@ Please select an option by specifying the corresponding number:
   end
   # rubocop:enable Layout/LineLength
 
+  def list_games
+    index = 0
+
+    @games.each do |game|
+      next unless game.instance_of? Game
+
+      puts "#{index}) Game: #{game.name}, published at: #{game.publish_date}, last played at: #{game.last_played_at}"
+      index += 1
+    end
+  end
+
   def save_data
     @file_manager.save_records('books', Book.to_s, @items)
     @file_manager.save_records('labels', Label.to_s, @labels)
+    @file_manager.save_records('games', Game.to_s, @games)
   end
 end
