@@ -8,8 +8,6 @@ class MusicAlbum
   def initialize
     @music = []
     @genres = []
-    load_music
-    load_genre
   end
 
   def list_music
