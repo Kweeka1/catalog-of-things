@@ -51,6 +51,22 @@ class FileManager
     labels
   end
 
+  def load_authors(file_name, items)
+    records = JSON.load_file "#{@path}/#{file_name}.json"
+    authors = []
+    records.map do |record|
+      author = Author.new(record['first_name'], record['last_name'])
+      authors << author
+      next if record['items'].empty?
+
+      record['items'].each do |item_id|
+        item = items.find { |elem| elem.id == item_id }
+        author.add_item(item) unless item.nil?
+      end
+    end
+    authors
+  end
+
   def load_games(file_name)
     records = JSON.load_file "#{@path}/#{file_name}.json"
 
