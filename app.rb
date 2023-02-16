@@ -28,14 +28,20 @@ class App
         list_books
       when '2'
         music.list_music
+      when '4'
+        puts 'list all games'
       when '5'
         music.list_genre
       when '6'
         list_labels
+      when '7'
+        puts 'list authors'
       when '9'
         add_book
       when '10'
         music.add_music
+      when '12'
+        puts 'Add a game'
       when '13'
         save_data
         music.save_music
