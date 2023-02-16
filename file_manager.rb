@@ -1,6 +1,6 @@
-require_relative 'book'
-require_relative 'label'
-require_relative 'game'
+require_relative 'book/book'
+require_relative 'book/label'
+require_relative 'game/game'
 
 class FileManager
   def initialize(path = './data')
@@ -8,11 +8,9 @@ class FileManager
     create_dir_unless_exists(path)
   end
 
-  def save_records(file_name, type, records)
+  def save_records(file_name, records)
     serialized = []
     records.each do |item|
-      next unless item.class.to_s == type
-
       serialized << item.to_object
     end
     File.write("#{@path}/#{file_name}.json", JSON.dump(serialized))
@@ -49,6 +47,8 @@ class FileManager
       end
     end
     labels
+  rescue StandardError
+    []
   end
 
   def load_authors(file_name, items)

@@ -46,18 +46,18 @@ class MusicAlbum
   def save_music
     music = @music.map { |song| { id: song.id, on_spotify: song.on_spotify, publish_date: song.publish_date } }.to_json
     genre = @genres.map { |genre_song| { id: genre_song.id, name: genre_song.name } }.to_json
-    save_m = File.open('music/music.json', 'w')
-    save_g = File.open('music/genre.json', 'w')
+    save_m = File.open('data/music.json', 'w')
+    save_g = File.open('data/genre.json', 'w')
     save_m.write(music)
     save_g.write(genre)
   end
 
   def load_music
-    if File.exist?('music/music.json')
-      load_music = File.read('music/music.json')
+    if File.exist?('data/music.json')
+      load_music = File.read('data/music.json')
       json_music = JSON.parse(load_music)
     else
-      File.write('music/music.json', [])
+      File.write('data/music.json', [])
       json_music = []
     end
 
@@ -68,11 +68,11 @@ class MusicAlbum
   end
 
   def load_genre
-    if File.exist?('music/genre.json')
-      load_genre = File.read('music/genre.json')
+    if File.exist?('data/genre.json')
+      load_genre = File.read('data/genre.json')
       json_genre = JSON.parse(load_genre)
     else
-      File.write('music/genre.json', [])
+      File.write('data/genre.json', [])
       json_genre = []
     end
 

@@ -1,5 +1,5 @@
-require_relative '../author'
-require_relative '../game'
+require_relative '../game/author'
+require_relative '../game/game'
 
 describe Author do
   let(:game1) { Game.new('Call of duty', '2010/01/01', '2015/05/05', true) }

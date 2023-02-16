@@ -1,59 +1,53 @@
-require_relative 'book'
+require_relative 'book/book'
 require_relative 'user_entry'
 require_relative 'file_manager'
 require_relative './music/music_album'
-require_relative './game'
-require_relative './author'
+require_relative './game/game_manager'
+require_relative './book/book_manager'
 
 class App
   def initialize
-    @file_manager = FileManager.new
-    @labels = []
-    @items = []
-    @games = []
-    @authors = []
-    load_data
+    @book_manager = BookManager.new
+    @game_manager = GameManager.new
+    @music = MusicAlbum.new
+    @music.load_music
+    @music.load_genre
   end
 
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/MethodLength
   def run
     puts 'Welcome to Catalog of my things'
-    music = MusicAlbum.new
-    music.load_music
-    music.load_genre
-
     loop do
       print_option
       option = gets.chomp
 
       case option
       when '1'
-        list_books
+        @book_manager.list_books
       when '2'
-        music.list_music
+        @music.list_music
+      when '3'
+        @game_manager.list_games
       when '4'
-        puts 'list all games'
+        @music.list_genre
       when '5'
-        music.list_genre
-      when '4'
-        list_games
+        @book_manager.list_labels
       when '6'
-        list_labels
+        @game_manager.list_authors
       when '7'
-        list_authors
+        @book_manager.add_book
+      when '8'
+        @music.add_music
       when '9'
-        add_book
+        @game_manager.add_game
       when '10'
-        music.add_music
-      when '12'
-        add_game
-      when '13'
-        save_data
-        music.save_music
-        break
+        @book_manager.save_data
+        @game_manager.save_data
+        @music.save_music
+        return
       else
-        puts 'list other things'
+        puts ''
       end
     end
   end
@@ -63,95 +57,18 @@ class App
 
   private
 
-  def load_data
-    @items.concat @file_manager.load_books 'books'
-    @labels.concat @file_manager.load_labels('labels', @items)
-    @games.concat @file_manager.load_games('games')
-    @authors.concat @file_manager.load_authors('authors', @items)
-  end
-
   def print_option
     puts "
 Please select an option by specifying the corresponding number:
 1  -  List all books
 2  -  List all music albums
-3  -  List all movies
-4  -  List of games
-5  -  List all genres (e.g 'Comedy', 'Thriller')
-6  -  List all labels (e.g. 'Gift', 'New')
-7  -  List all authors (e.g. 'Stephen King')
-8  -  List all sources (e.g. 'From a friend', 'Online shop')
-9  -  Add a book
-10 -  Add a music album
-11 -  Add a movie
-12 -  Add a game
-13 -  Quit"
-  end
-
-  def add_book
-    title = UserEntry.get_str('Book title: ', 'Please enter a valid title!')
-    publish_date = UserEntry.get_date('Publish date: ', 'Please enter a valid date!')
-    publisher = UserEntry.get_str('Publisher: ', 'Please enter a valid name!')
-    cover_state = UserEntry.get_str('Cover state: ', 'Please enter a valid cover state!')
-    @items << Book.new(title, publish_date, publisher, cover_state)
-    puts 'Book created successfully'
-  end
-
-  def add_game
-    name = UserEntry.get_str('Enter game name: ', 'Please enter a valid game name')
-
-    publish_date = UserEntry.get_date('Publish date: ', 'Please enter a valid date!')
-
-    last_played_at = UserEntry.get_date('last played at date: ', 'Please enter a valid date!')
-
-    multiplayer =
-      UserEntry.get_bool(
-        'Multiplayer(y/n): ',
-        'Value entered is not valid. Please enter (y) for yes and (n) for no'
-      )
-    @games << Game.new(name, publish_date, last_played_at, multiplayer)
-    puts 'Game created successfully'
-  end
-
-  def list_labels
-    @labels.each_with_index do |label, idx|
-      puts "#{idx}) Title: #{label.title}, Color: #{label.color}"
-    end
-  end
-
-  # rubocop:disable Layout/LineLength
-  def list_books
-    idx = 0
-    @items.each do |item|
-      next unless item.instance_of? Book
-
-      puts "#{idx}) #{item.title} by #{item.publisher}, published at #{item.publish_date} with #{item.cover_state} cover state."
-      idx += 1
-    end
-  end
-  # rubocop:enable Layout/LineLength
-
-  def list_games
-    index = 0
-
-    @games.each do |game|
-      next unless game.instance_of? Game
-
-      puts "#{index}) Game: #{game.name}, published at: #{game.publish_date}, last played at: #{game.last_played_at}"
-      index += 1
-    end
-  end
-
-  def list_authors
-    @authors.each_with_index do |author, idx|
-      puts "#{idx}) Author name: #{author.first_name} #{author.last_name}"
-    end
-  end
-
-  def save_data
-    @file_manager.save_records('books', Book.to_s, @items)
-    @file_manager.save_records('labels', Label.to_s, @labels)
-    @file_manager.save_records('games', Game.to_s, @games)
-    @file_manager.save_records('authors', Author.to_s, @authors)
+3  -  List of games
+4  -  List all genres (e.g 'Comedy', 'Thriller')
+5  -  List all labels (e.g. 'Gift', 'New')
+6  -  List all authors (e.g. 'Stephen King')
+7  -  Add a book
+8  -  Add a music album
+9  -  Add a game
+10 -  Quit"
   end
 end

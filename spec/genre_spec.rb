@@ -1,4 +1,4 @@
-require_relative '../genre'
+require_relative '../music/genre'
 
 describe Genre do
   context 'Testing for genre class' do
