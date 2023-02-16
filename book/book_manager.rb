@@ -1,5 +1,5 @@
-require_relative 'file_manager'
-require_relative 'user_entry'
+require_relative '../file_manager'
+require_relative '../user_entry'
 require_relative 'book'
 require_relative 'label'
 
@@ -42,7 +42,7 @@ class BookManager
   # rubocop:enable Layout/LineLength
 
   def save_data
-    @file_manager.save_records('books', Book.to_s, @books)
-    @file_manager.save_records('labels', Label.to_s, @labels)
+    @file_manager.save_records('books', @books)
+    @file_manager.save_records('labels', @labels)
   end
 end

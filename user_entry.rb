@@ -33,4 +33,29 @@ class UserEntry
       get_date(param_name, error)
     end
   end
+
+  def self.get_bool(param_name, error = '')
+    print param_name
+    input = gets.chomp
+
+    begin
+      Boolean.new(input).value
+    rescue StandardError
+      puts error
+      get_bool(param_name, error)
+    end
+  end
+end
+
+class Boolean
+  attr_reader :value
+
+  def initialize(str)
+    case str
+    when 'y', 'yes', 'Yes', 'Y', 'YES'
+      @value = true
+    when 'n', 'no', 'No', 'N', 'NO'
+      @value = false
+    end
+  end
 end
