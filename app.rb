@@ -3,6 +3,7 @@ require_relative 'user_entry'
 require_relative 'file_manager'
 require_relative './music/music_album'
 require_relative './game'
+require_relative './author'
 
 class App
   def initialize
@@ -10,6 +11,7 @@ class App
     @labels = []
     @items = []
     @games = []
+    @authors = []
     load_data
   end
 
@@ -36,6 +38,8 @@ class App
         list_games
       when '6'
         list_labels
+      when '7'
+        list_authors
       when '9'
         add_book
       when '10'
@@ -100,7 +104,7 @@ Please select an option by specifying the corresponding number:
     multiplayer =
       UserEntry.get_bool(
         'Multiplayer(y/n): ',
-        'Value entered is not valid. Please enter (y) for yes and (n) for no',
+        'Value entered is not valid. Please enter (y) for yes and (n) for no'
       )
     @games << Game.new(name, publish_date, last_played_at, multiplayer)
     puts 'Game created successfully'
@@ -133,6 +137,10 @@ Please select an option by specifying the corresponding number:
       puts "#{index}) Game: #{game.name}, published at: #{game.publish_date}, last played at: #{game.last_played_at}"
       index += 1
     end
+  end
+
+  def list_authors
+    return unless author
   end
 
   def save_data

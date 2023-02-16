@@ -20,7 +20,7 @@ class Game < Item
       'name' => @name,
       'publish_date' => @publish_date,
       'multiplayer' => @multiplayer,
-      'last_played_at' => @last_played_at,
+      'last_played_at' => @last_played_at
     }
   end
 end

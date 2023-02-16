@@ -26,7 +26,7 @@ class FileManager
         record['publish_date'],
         record['publisher'],
         record['cover_state'],
-        record['id'],
+        record['id']
       )
     end
   rescue StandardError
@@ -59,7 +59,7 @@ class FileManager
         record['name'],
         record['publish_date'],
         record['last_played_at'],
-        record['multiplayer'],
+        record['multiplayer']
       )
     rescue StandardError
       []
