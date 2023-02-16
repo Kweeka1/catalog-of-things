@@ -3,7 +3,7 @@ require 'time'
 
 class Item
   attr_reader :publish_date, :id
-  attr_accessor :label, :genre
+  attr_accessor :label, :genre, :author
 
   # @param [Date] publish_date
   # @param [Integer] id
@@ -27,6 +27,11 @@ class Item
   def add_genre(genre)
     @genre = genre
     genre.add_item << self unless genre.items.include?(self)
+  end
+
+  def add_author(author)
+    self.author = (author)
+    author.add_item(self) unless author.items.include?(self)
   end
 
   private
