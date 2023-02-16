@@ -65,6 +65,7 @@ class App
     @items.concat @file_manager.load_books 'books'
     @labels.concat @file_manager.load_labels('labels', @items)
     @games.concat @file_manager.load_games('games')
+    @authors.concat @file_manager.load_authors('authors', @items)
   end
 
   def print_option
@@ -140,12 +141,15 @@ Please select an option by specifying the corresponding number:
   end
 
   def list_authors
-    return unless author
+    @authors.each_with_index do |author, idx|
+      puts "#{idx}) Author name: #{author.first_name} #{author.last_name}"
+    end
   end
 
   def save_data
     @file_manager.save_records('books', Book.to_s, @items)
     @file_manager.save_records('labels', Label.to_s, @labels)
     @file_manager.save_records('games', Game.to_s, @games)
+    @file_manager.save_records('authors', Author.to_s, @authors)
   end
 end
