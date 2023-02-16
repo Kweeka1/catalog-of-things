@@ -1,8 +1,9 @@
 require_relative '../game'
+require 'date'
 
 describe Game do
-  let(:game1) { Game.new('Call of duty', '2010/01/01', '2015/05/05', true) }
-  let(:game2) { Game.new('Castlevenia', '2023/01/01', '2023/05/05', false) }
+  let(:game1) { Game.new('Call of duty', Date.parse('2010/01/01'), Date.parse('2015/05/05'), true) }
+  let(:game2) { Game.new('Castlevenia', Date.parse('2023/01/01'), Date.parse('2023/05/05'), false) }
 
   it 'can be archived? method return true' do
     expect(game1.can_be_archived?).to be true
