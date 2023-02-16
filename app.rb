@@ -32,6 +32,8 @@ class App
         list_books
       when '2'
         music.list_music
+      when '4'
+        puts 'list all games'
       when '5'
         music.list_genre
       when '4'
